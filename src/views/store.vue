@@ -19,7 +19,7 @@
     <p>
       userName: 
       {{stateName}}
-      <button @click="() => SET_STATE_NAME(Math.random().toString(16))">修改 userName</button>  
+      <button @click="() => SET_APP_NAME(Math.random().toString(16).slice(2))">修改 userName</button>  
     </p>
 
     <p>
