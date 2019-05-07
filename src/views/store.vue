@@ -13,7 +13,7 @@
 
     <p>
       修改 appName
-      <input @input="(e) => _appName = e.target.value">
+      <input  v-model="_appName">
     </p>
 
     <p>
