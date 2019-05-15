@@ -71,6 +71,11 @@ export default [
     component: () => import('@/views/axios')
   },
   {
+    path: '/count-to',
+    name: 'count-to',
+    component: () => import('@/views/count-to')
+  },
+  {
     path: '*',
     component: () => import('@/views/error_404.vue')
   }
