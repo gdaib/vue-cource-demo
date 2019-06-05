@@ -1,9 +1,9 @@
 import Home from '@/views/Home.vue'
 export default [
   {
-    path: '/',
-    alias: '/home_page',
-    name: 'home',
+    path: "/",
+    alias: "/home_page",
+    name: "home",
     component: Home,
     props: route => ({
       food: route.query.food
@@ -11,72 +11,78 @@ export default [
     beforeEnter: (to, from, next) => {
       // if (from.name === 'about') alert('这是从about来的')
       // else alert('这不是从about来的')
-      next()
+      next();
     }
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/login.vue')
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/login.vue")
   },
   {
-    path: '/about',
-    name: 'about',
+    path: "/about",
+    name: "about",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/About.vue"),
     props: {
-      food: 'banana'
+      food: "banana"
     },
     meta: {
-      title: '关于'
+      title: "关于"
     }
   },
   {
-    path: '/argu/:name',
-    name: 'argu',
-    component: () => import('@/views/argu.vue'),
+    path: "/argu/:name",
+    name: "argu",
+    component: () => import("@/views/argu.vue"),
     props: true
   },
   {
-    path: '/parent',
-    name: 'parent',
-    component: () => import('@/views/parent.vue'),
+    path: "/parent",
+    name: "parent",
+    component: () => import("@/views/parent.vue"),
     children: [
       {
-        path: 'child',
-        component: () => import('@/views/child.vue')
+        path: "child",
+        component: () => import("@/views/child.vue")
       }
     ]
   },
   {
-    path: '/named_view',
+    path: "/named_view",
     components: {
-      default: () => import('@/views/child.vue'),
-      email: () => import('@/views/email.vue'),
-      tel: () => import('@/views/tel.vue')
+      default: () => import("@/views/child.vue"),
+      email: () => import("@/views/email.vue"),
+      tel: () => import("@/views/tel.vue")
     }
   },
   {
-    path: '/main',
-    redirect: to => '/'
+    path: "/main",
+    redirect: to => "/"
   },
   {
-    path: '/store',
-    component: () => import('@/views/store')
+    path: "/store",
+    component: () => import("@/views/store")
   },
   {
-    path: '/axios',
-    component: () => import('@/views/axios')
+    path: "/axios",
+    component: () => import("@/views/axios")
   },
   {
-    path: '/count-to',
-    name: 'count-to',
-    component: () => import('@/views/count-to')
+    path: "/count-to",
+    name: "count-to",
+    component: () => import("@/views/count-to")
   },
   {
-    path: '*',
-    component: () => import('@/views/error_404.vue')
+    path: "/split-pane",
+    name: "split-pane",
+    component: () => import("@/views/split-pane")
+  },
+  {
+    path: "*",
+    component: () => import("@/views/error_404.vue")
   }
-]
+];
