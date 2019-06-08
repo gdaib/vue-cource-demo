@@ -1,7 +1,9 @@
 <template>
   <span>
     <slot name="prefix"/>
-    <span ref="number" :class="countClass" :id="eleId"></span>
+    <span ref="number" :class="countClass" :id="eleId">
+      <slot></slot>
+    </span>
     <slot name="after"/>
   </span>
 </template>
