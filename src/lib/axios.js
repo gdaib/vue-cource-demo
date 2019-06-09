@@ -1,10 +1,11 @@
 import axios from "axios";
 import { baseUrl } from "@/config";
+import { getToken } from '@/lib/util'
 
 class HttpRequest {
   constructor(options = {}) {
     this.baseUrl = options.baseUrl || baseUrl;
-    this.queue = {};
+    this.queue = {}; 
   }
 
 
@@ -28,6 +29,7 @@ class HttpRequest {
         // 全局 loading 
       }
       this.queue[url] = true
+      config.headers["Authorization"] = getToken()
       // 全局 loading
       return config
     }, error => {

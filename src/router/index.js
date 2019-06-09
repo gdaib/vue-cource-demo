@@ -1,32 +1,47 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import routes from './router'
-import { setTitle } from '@/lib/util'
+import Vue from "vue";
+import Router from "vue-router";
+import store from "@/store";
+import routes from "./router";
+import { setTitle, getToken, clearToken } from "@/lib/util";
 
-Vue.use(Router)
+Vue.use(Router);
 
 const router = new Router({
   routes
-})
-
-const HAS_LOGINED = true
+});
 
 router.beforeEach((to, from, next) => {
-  to.meta && setTitle(to.meta.title)
-  if (to.name !== 'login') {
-    if (HAS_LOGINED) next()
-    else next({ name: 'login' })
+  to.meta && setTitle(to.meta.title);
+
+  const token = getToken();
+
+  if (token) {
+    // 每次跳转调用接口是为了给 token 续过期时间
+    store
+      .dispatch("authorization", token)
+      .then(() => {
+        // token 没失效，手动进去 login 页面重定向到 home
+        if (to.name === "login") {
+          next({ name: "home" });
+        } else {
+          next();
+        }
+      })
+      .catch(() => {
+        clearToken();
+        next({ name: "login" });
+      });
   } else {
-    if (HAS_LOGINED) next({ name: 'home' })
-    else next()
+    if (to.name === "login") next();
+    else next({ name: "login" });
   }
-})
+});
 
 // router.beforeResolve
 
 router.afterEach((to, from) => {
   // logining = false
-})
+});
 
 /**
  * 1. 导航被触发
@@ -43,4 +58,4 @@ router.afterEach((to, from) => {
  * 12. 用创建好的实例调用beforeRouterEnter守卫里传给next的回调函数
  */
 
-export default router
+export default router;
