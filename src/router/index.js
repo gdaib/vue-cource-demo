@@ -13,28 +13,29 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   to.meta && setTitle(to.meta.title);
 
-  const token = getToken();
+  // const token = getToken();
 
-  if (token) {
-    // 每次跳转调用接口是为了给 token 续过期时间
-    store
-      .dispatch("authorization", token)
-      .then(() => {
-        // token 没失效，手动进去 login 页面重定向到 home
-        if (to.name === "login") {
-          next({ name: "home" });
-        } else {
-          next();
-        }
-      })
-      .catch(() => {
-        clearToken();
-        next({ name: "login" });
-      });
-  } else {
-    if (to.name === "login") next();
-    else next({ name: "login" });
-  }
+  // if (token) {
+  //   // 每次跳转调用接口是为了给 token 续过期时间
+  //   store
+  //     .dispatch("authorization", token)
+  //     .then(() => {
+  //       // token 没失效，手动进去 login 页面重定向到 home
+  //       if (to.name === "login") {
+  //         next({ name: "home" });
+  //       } else {
+  //         next();
+  //       }
+  //     })
+  //     .catch(() => {
+  //       clearToken();
+  //       next({ name: "login" });
+  //     });
+  // } else {
+  //   if (to.name === "login") next();
+  //   else next({ name: "login" });
+  // }
+  next()
 });
 
 // router.beforeResolve

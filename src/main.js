@@ -4,8 +4,11 @@ import router from "./router";
 import store from "./store";
 import Bus from "./lib/bus";
 import axios from "axios";
-import CountTo from "@/components/count-to";
+import iview from 'iview'
+import 'iview/dist/styles/iview.css'
 
+
+Vue.use(iview);
 Vue.config.productionTip = false;
 
 Vue.prototype.$axios = axios;

@@ -1,10 +1,11 @@
 import Home from '@/views/Home.vue'
+import Layout from "@/views/layout";
 export default [
   {
     path: "/",
     alias: "/home_page",
     name: "home",
-    component: Home,
+    component: Layout,
     props: route => ({
       food: route.query.food
     }),
@@ -12,7 +13,13 @@ export default [
       // if (from.name === 'about') alert('这是从about来的')
       // else alert('这不是从about来的')
       next();
-    }
+    },
+    children: [
+      {
+        path: 'home',
+        component: Home
+      }
+    ]
   },
   {
     path: "/login",
@@ -85,6 +92,11 @@ export default [
     path: "/menu-page",
     name: "menu-page",
     component: () => import("@/views/menu-page/index.js")
+  },
+  {
+    path: "/layout",
+    name: "layout",
+    component: () => import("@/views/layout")
   },
   {
     path: "*",
