@@ -8,6 +8,9 @@ import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 
 
+// import '@/mock'
+
+
 Vue.use(iview);
 Vue.config.productionTip = false;
 

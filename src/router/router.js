@@ -18,6 +18,10 @@ export default [
       {
         path: 'home',
         component: Home
+      },
+      {
+        path: 'table',
+        component: () => import('@/views/table.vue')
       }
     ]
   },

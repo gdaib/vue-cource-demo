@@ -1998,6 +1998,11 @@ clone@^2.1.1, clone@^2.1.2:
   resolved "http://registry.npm.taobao.org/clone/download/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
+clonedeep@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/clonedeep/download/clonedeep-2.0.0.tgz#8ceca0777f477bbf31fe8c871aaf63a390bbc272"
+  integrity sha1-jOygd39He78x/oyHGq9jo5C7wnI=
+
 co@^4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/co/download/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"

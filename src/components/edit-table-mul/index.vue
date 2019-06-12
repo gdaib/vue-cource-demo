@@ -5,7 +5,7 @@
 <script>
 import clonedeep from "clonedeep";
 export default {
-  name: "EditTable",
+  name: "EditTableMul",
   props: {
     columns: {
       type: Array,
@@ -18,6 +18,7 @@ export default {
   },
   data() {
     return {
+      insideData: [],
       insideColumns: [],
       edittingId: "",
       edittingContent: ""
@@ -26,6 +27,9 @@ export default {
   watch: {
     columns() {
       this.handleColumns();
+    },
+    value() {
+      this.handleColumns();
     }
   },
   methods: {
@@ -33,31 +37,44 @@ export default {
       this.edittingContent = newValue;
     },
     handleClick({ row, index, column }) {
-      let tableData = clonedeep(this.value);
-      if (this.edittingId === `${column.key}_${index}`) {
-        this.$emit("input", tableData);
-        tableData[index][column.key] = this.edittingContent;
+      // this.insideData[index].edittingKeyArr ?
+      // let tableData = clonedeep(this.value);
+      let keyIndex = this.insideData[index].edittingKeyArr
+        ? this.insideData[index].edittingKeyArr.indexOf(column.key)
+        : -1;
+      let rowObj = this.insideData[index];
+
+      if (keyIndex > -1) {
+        rowObj.edittingKeyArr.splice(keyIndex, 1);
+        this.insideData.splice(index, 1, rowObj);
+        this.$emit("input", this.insideData);
         this.$emit("on-edit", {
           row,
           index,
           column,
-          newValue: this.edittingContent
+          newValue: this.insideData[index][column.key]
         });
-        this.edittingId = "";
-        this.edittingContent = "";
       } else {
-        this.edittingContent = tableData[index][column.key];
-        this.edittingId = `${column.key}_${index}`;
+        // 取当前行数据，创建一个 key 数组，key数组有当前key就是一个编辑状态
+        let rowObj = this.insideData[index];
+        rowObj.edittingKeyArr = rowObj.edittingKeyArr
+          ? [...rowObj.edittingKeyArr, column.key]
+          : [column.key];
+        this.insideData.splice(index, 1, rowObj);
       }
     },
     handleColumns() {
+      this.insideData = clonedeep(this.value);
       this.insideColumns = this.columns.map(item => {
         if (!item.render && item.editable) {
           item.render = (h, { row, index, column }) => {
-            const isEditting = this.edittingId === `${column.key}_${index}`;
+            const keyArr = this.insideData[index]
+              ? this.insideData[index].edittingKeyArr
+              : [];
+            const isEdit = keyArr && keyArr.indexOf(column.key) > -1;
             return (
               <div>
-                {isEditting ? (
+                {isEdit ? (
                   <i-input
                     value={row[column.key]}
                     style="width: 50px;"
@@ -70,7 +87,7 @@ export default {
                   type="text"
                   on-click={this.handleClick.bind(this, { row, index, column })}
                 >
-                  {isEditting ? "保存" : "编辑"}
+                  {isEdit ? "保存" : "编辑"}
                 </i-button>
               </div>
             );
